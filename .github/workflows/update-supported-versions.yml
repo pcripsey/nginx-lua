@@ -26,7 +26,11 @@ jobs:
         run: make generate-supported-versions generate-dockerfiles
 
       - name: Build updated mainline image
-        run: docker build --file Dockerfile --tag nginx-lua:latest .
+        run: |
+          nginx_version=$(sed -n 's/^nginx_mainline=//p' supported_versions)
+          alpine_version=$(sed -n 's/^alpine=//p' supported_versions)
+          dockerfile="nginx/${nginx_version}/alpine/${alpine_version}/Dockerfile"
+          docker build --file "$dockerfile" --tag nginx-lua:latest "$(dirname "$dockerfile")"
 
       - name: Create update pull request
         uses: peter-evans/create-pull-request@v7

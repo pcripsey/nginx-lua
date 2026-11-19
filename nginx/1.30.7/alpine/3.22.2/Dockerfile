@@ -7,7 +7,7 @@
 # Copyright (c) 2025 Fabio Cicerchia. https://fabiocicerchia.it. MIT License
 # Repo: https://github.com/fabiocicerchia/nginx-lua
 
-ARG ARCH=
+ARG ARCH=amd64
 ARG DISTRO=alpine
 ARG DISTRO_VER=3.22.2
 
@@ -16,7 +16,7 @@ ARG DISTRO_VER=3.22.2
 #############################
 FROM ${ARCH}/$DISTRO:$DISTRO_VER AS base
 
-ARG ARCH=
+ARG ARCH
 ENV ARCH=$ARCH
 
 ENV DOCKER_IMAGE=fabiocicerchia/nginx-lua
