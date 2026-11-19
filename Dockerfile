@@ -9,7 +9,7 @@
 
 ARG ARCH=amd64
 ARG DISTRO=alpine
-ARG DISTRO_VER=3.22.2
+ARG DISTRO_VER=3.24.4
 
 #############################
 # Settings Common Variables #
