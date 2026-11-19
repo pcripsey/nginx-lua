@@ -7,7 +7,7 @@
 # Copyright (c) 2025 Fabio Cicerchia. https://fabiocicerchia.it. MIT License
 # Repo: https://github.com/fabiocicerchia/nginx-lua
 
-ARG ARCH=
+ARG ARCH=amd64
 ARG DISTRO={{DOCKER_IMAGE_OS}}
 ARG DISTRO_VER={{DOCKER_IMAGE_TAG}}
 
@@ -16,7 +16,7 @@ ARG DISTRO_VER={{DOCKER_IMAGE_TAG}}
 #############################
 FROM ${ARCH}/$DISTRO:$DISTRO_VER AS base
 
-ARG ARCH=
+ARG ARCH
 ENV ARCH=$ARCH
 
 ENV DOCKER_IMAGE={{DOCKER_IMAGE}}
