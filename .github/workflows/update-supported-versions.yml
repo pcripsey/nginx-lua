@@ -1,0 +1,42 @@
+name: Update supported versions
+
+on:
+  schedule:
+    - cron: "37 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install updater dependencies
+        run: python -m pip install -r bin/requirements.txt
+
+      - name: Refresh supported versions and generated Dockerfiles
+        run: make generate-supported-versions generate-dockerfiles
+
+      - name: Build updated mainline image
+        run: docker build --file Dockerfile --tag nginx-lua:latest .
+
+      - name: Create update pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/update-supported-versions
+          commit-message: "chore: update supported versions"
+          title: "chore: update supported versions"
+          body: |
+            Refresh NGINX mainline/stable and supported base image versions,
+            then regenerate the corresponding Dockerfiles.
+
+            The generated mainline image was built by the scheduled workflow.
